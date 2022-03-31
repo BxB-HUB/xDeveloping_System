@@ -1,5 +1,8 @@
 local coreGui = game:GetService("CoreGui")
 local tweenService = game:GetService("TweenService");
+local marketplaceService = game:GetService("MarketplaceService")
+local isSuccessful, info = pcall(marketplaceService.GetProductInfo, marketplaceService, game.PlaceId)
+
 
 function createTween(Object,setup,settings)
 	local style = (settings.Style or Enum.EasingStyle.Sine);
@@ -199,7 +202,7 @@ function RUN_FUNCTION(name, extension, configOpt)
         Message.Text = "Game Found!"
         wait(1)
         setSize(80)
-        Message.Text = GAME_NAME
+        Message.Text = info.Name
         wait(.5)
         setSize(100)
         

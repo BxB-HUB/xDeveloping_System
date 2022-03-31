@@ -803,4 +803,34 @@ function library.new(name, settings)
 end
 
 return library;
+
+
+
+
+
+--
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Snakeboy99/BLUEX/main/BlueXLibrary.lua",true))()
+
+local blueXLibrary = library.new("UI Library")
+local Player_Tab = blueXLibrary:make_tab("Player",true)
+local World_Tab = blueXLibrary:make_tab("Server")
+
+local Player = Player_Tab:addSection("LocalPlayer")
+Player:AddToggle("Fast Walk", false, function(a_1)
+   print(a_1)  
+end)
+
+Player:AddToggle("Infinite Jump", false, function(a_2)
+   print(a_2)  
+end)
+
+local World = World_Tab:addSection("World")
+World:AddButton("Invisible Walls", function()
+   print("pressed")    
+end)
+
+World:AddButton("Always Day", function()
+   print("pressed")  
+end)
 ]]--
